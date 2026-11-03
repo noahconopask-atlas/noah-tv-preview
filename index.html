@@ -279,14 +279,14 @@ function send(cmd){if(!frame||!frame.contentWindow)return;
 function setPaused(p){paused=p;PS.textContent=p?'RESUME':'PAUSE';}
 function load(){
  clearT();clearTimeout(probe);
- const f=infoOf(list[idx]);src=f.src;heard=false;left=(DUR[f.id]||0)*1000;setPaused(false);
+ PL._tt=0;const f=infoOf(list[idx]);src=f.src;heard=false;left=(DUR[f.id]||0)*1000;setPaused(false);
  document.getElementById('pclient').textContent=f.client;
  document.getElementById('ptitle').textContent=f.title;
  document.getElementById('pcount').textContent=String(idx+1).padStart(2,'0')+' / '+String(list.length).padStart(2,'0');
  const one=list.length<2;['pprev','pnext','pprev2','pnext2'].forEach(i=>document.getElementById(i).disabled=one);
  const url=f.src==='youtube'
-  ?`https://www.youtube-nocookie.com/embed/${f.id}?autoplay=1&controls=0&rel=0&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&enablejsapi=1`
-  :`${VIMEO}/video/${f.id}?autoplay=1&controls=0&title=0&byline=0&portrait=0&badge=0&vimeo_logo=0&sidedock=0&pip=0&loop=0&autopause=1&dnt=1&api=1&player_id=p${f.id}`;
+  ?`https://www.youtube-nocookie.com/embed/${f.id}?autoplay=1&controls=0&rel=0&playsinline=1&cc_load_policy=0&iv_load_policy=3&disablekb=1&fs=0&enablejsapi=1`
+  :`${VIMEO}/video/${f.id}?autoplay=1&controls=0&title=0&byline=0&portrait=0&badge=0&vimeo_logo=0&sidedock=0&pip=0&loop=0&autopause=1&dnt=1&texttrack=false&api=1&player_id=p${f.id}`;
  PF.classList.remove('live');
  PF.innerHTML=`<img src="${f.poster}" alt=""><iframe src="${url}" title="${f.label}" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe><button type="button" class="hit" aria-label="Pause or resume ${f.label}"></button>`;
  frame=PF.querySelector('iframe');
@@ -318,7 +318,8 @@ function toggle(){send({method:paused?'play':'pause'});if(paused)armT();else pau
 addEventListener('message',e=>{if(!frame||e.source!==frame.contentWindow)return;let d=e.data;try{if(typeof d==='string')d=JSON.parse(d);}catch(_){return;}if(!d)return;
  heard=true;clearT();
  if(src==='vimeo'){
-  if(d.event==='ready'){['ended','pause','play'].forEach(v=>send({method:'addEventListener',value:v}));}
+  if(d.event==='ready'){['ended','pause','play'].forEach(v=>send({method:'addEventListener',value:v}));send({method:'disableTextTrack'});}
+  else if(d.event==='play'&&!PL._tt){PL._tt=1;send({method:'disableTextTrack'});setPaused(false);}
   else if(d.event==='ended'||d.event==='finish'){closePlayer();}
   else if(d.event==='pause'){setPaused(true);}
   else if(d.event==='play'){setPaused(false);}
