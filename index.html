@@ -35,8 +35,21 @@ nav a[aria-current=page]{text-decoration-line:underline}
 #narrative .tile{width:min(100%,calc((100vh - 150px) * 16 / 9));width:min(100%,calc((100svh - 150px) * 16 / 9))}
 #narrative .meta .n{display:none}
 #narrative .tile .note{padding-left:0}
+@media (min-width:761px){
+ #work .reel{max-height:calc(100vh - 74px - 132px);max-height:calc(100svh - 74px - 132px)}
+ #work .sel{padding-top:30px!important}
+}
+#work .bar{border-top:0;padding-top:0}
+.reel .cue{position:absolute;bottom:12px;padding:10px 8px;margin:0 -8px;color:#ecebe6;text-shadow:0 0 10px rgba(0,0,0,.7);opacity:.85;transition:opacity .6s ease;display:flex;gap:1ch;align-items:baseline}
+.reel .cue.l{left:14px}.reel .cue.r{right:14px}
+.reel .cue:hover{opacity:1}
+.reel .cue .ar{display:block;filter:drop-shadow(0 0 6px rgba(0,0,0,.6));animation:cue 2.4s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.reel .cue.gone{opacity:0;pointer-events:none}
+@media (max-width:760px){.reel .cue{display:none}}
+@media (prefers-reduced-motion:reduce){.reel .cue .ar{animation:none}}
 .view{display:none}.view.on{display:block}
-.reel{position:relative;width:100%;aspect-ratio:16/9;max-height:calc(100vh - 74px);min-height:220px;overflow:hidden;background:#000;container-type:size}
+.reel{position:relative;width:100%;aspect-ratio:16/9;max-height:calc(100vh - 74px);max-height:calc(100svh - 74px);min-height:220px;overflow:hidden;background:#000;container-type:size}
 .reel .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .reel iframe{position:absolute;left:50%;top:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity 1.2s ease}
 .reel.live iframe{opacity:1}
@@ -121,8 +134,9 @@ footer a{text-decoration:none;padding:12px 0}
 <section class="reel" aria-label="Reel" id="reel">
 <img class="poster" src="img/00-reel.jpg" alt="">
 <iframe id="reelbg" src="https://player.vimeo.com/video/529062239?background=1&autoplay=1&loop=1&muted=1&controls=0&autopause=0&dnt=1&texttrack=false&title=0&byline=0&portrait=0" title="Noah Conopask reel, playing silently" tabindex="-1" aria-hidden="true" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+<button type="button" class="cue l" aria-label="Scroll to selected work"><svg class="ar" width="12" height="20" viewBox="0 0 12 20" aria-hidden="true"><path d="M6 1v17M1 13l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.25"/></svg></button><button type="button" class="cue r" aria-label="Scroll to selected work" tabindex="-1"><svg class="ar" width="12" height="20" viewBox="0 0 12 20" aria-hidden="true"><path d="M6 1v17M1 13l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.25"/></svg></button>
 </section>
-<section aria-label="Selected work" style="padding:72px 0 120px">
+<section class="sel" id="selected" aria-label="Selected work" style="padding:72px 0 120px">
 <div class="bar"><span>SELECTED WORK</span><span class="muted" id="fcount">25 FILMS</span></div>
 <div class="grid" id="films"></div>
 </section>
@@ -239,6 +253,7 @@ const F=[
 const IMG={"00-reel": "img/00-reel.jpg", "01-patron": "img/01-patron.jpg", "02-bullish": "img/02-bullish.jpg", "03-bmw-redefined": "img/03-bmw-redefined.jpg", "04-hoka": "img/04-hoka.jpg", "05-nemiroff": "img/05-nemiroff.jpg", "06-bmw-rereveal": "img/06-bmw-rereveal.jpg", "07-asics": "img/07-asics.jpg", "07b-absorber": "img/07b-absorber.jpg", "08-redbull": "img/08-redbull.jpg", "09-ua-thegift": "img/09-ua-thegift.jpg", "10-bodyarmor": "img/10-bodyarmor.jpg", "11-bose-inspired": "img/11-bose-inspired.jpg", "12-adrenaline": "img/12-adrenaline.jpg", "13-tampa": "img/13-tampa.jpg", "14-coros": "img/14-coros.jpg", "15-ladbrokes": "img/15-ladbrokes.jpg", "16-solomongrey": "img/16-solomongrey.jpg", "17-eastbay": "img/17-eastbay.jpg", "17b-eastbay-distractions": "img/17b-eastbay-distractions.jpg", "18-skoda": "img/18-skoda.jpg", "19-dazn": "img/19-dazn.jpg", "20-academy": "img/20-academy.jpg", "21-bose-hardtime": "img/21-bose-hardtime.jpg", "22-gm": "img/22-gm.jpg", "23-pwc": "img/23-pwc.jpg", "24-nike": "img/24-nike.jpg", "25-ua-coldgear": "img/25-ua-coldgear.jpg", "25b-gillette": "img/25b-gillette.jpg", "26-eastbay-itbeginsnow": "img/26-eastbay-itbeginsnow.jpg", "n1-absorber": "img/n1-absorber.jpg", "n2-the-reason": "img/n2-the-reason.jpg"};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 (()=>{const g=document.getElementById('sgrid');const n=+g.dataset.n;let h='';for(let i=1;i<=n;i++){const k=String(i).padStart(3,'0');h+=`<img src="stills/absorber/${k}.jpg" width="720" height="360" loading="lazy" decoding="async" alt="">`;}g.innerHTML=h;})();
+(()=>{const cs=[...document.querySelectorAll('.reel .cue')];if(!cs.length)return;const go=()=>{const t=document.getElementById('selected');const y=t.getBoundingClientRect().top+scrollY-74+30-12;scrollTo({top:y,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})};cs.forEach(c=>c.addEventListener('click',go));const f=()=>cs.forEach(c=>c.classList.toggle('gone',scrollY>40));addEventListener('scroll',f,{passive:true});f();})();
 document.getElementById('fcount').textContent=F.length+' FILMS';
 document.getElementById('films').innerHTML=F.map((f,i)=>{const lab=f[1]+' — '+f[2];return `<div class="tile" data-src="${f[4]||'vimeo'}" data-id="${f[3]}" data-label="${esc(lab)}"><div class="ph"><button type="button" class="thumb" aria-label="Play ${esc(lab)}"><img loading="lazy" src="${IMG[f[0]]}" alt=""></button></div><div class="meta"><span class="n">${String(i+1).padStart(2,'0')}</span><span>${esc(f[1])}</span><span class="muted">${esc(f[2])}</span><span class="ctl"><button type="button" class="go">PLAY</button></span></div></div>`}).join('');
 const RB=document.getElementById('reelbg');RB.addEventListener('load',()=>setTimeout(()=>document.getElementById('reel').classList.add('live'),700));
