@@ -32,6 +32,7 @@ nav a[aria-current=page]{text-decoration-line:underline}
 .sgrid img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:cover;background:var(--well)}
 .slab{display:flex;gap:2ch;margin:0 0 14px}
 @media (max-width:600px){.sgrid{grid-template-columns:repeat(3,1fr)}}
+#narrative .tile{width:min(100%,calc((100vh - 150px) * 16 / 9));width:min(100%,calc((100svh - 150px) * 16 / 9))}
 .view{display:none}.view.on{display:block}
 .reel{position:relative;width:100%;aspect-ratio:16/9;max-height:calc(100vh - 74px);min-height:220px;overflow:hidden;background:#000;container-type:size}
 .reel .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
