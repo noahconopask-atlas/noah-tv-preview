@@ -28,7 +28,7 @@ nav a[aria-current=page]{text-decoration-line:underline}
 @media (max-width:600px){
  header{gap:8px;padding:0 12px;flex-wrap:nowrap}
  nav{flex-wrap:nowrap;column-gap:8px;white-space:nowrap}
- header nav a{font-size:min(10px,calc((100vw - 116px) / 30.6))}
+ header nav a{font-size:min(10px,calc((100vw - 116px) / 25.8))}
  .ig{width:32px;margin-right:-8px}
  .ig.im{width:34px;margin-left:-4px;margin-right:-4px}
 }
@@ -126,7 +126,7 @@ footer a{text-decoration:none;padding:12px 0}
 <a href="#about" data-v="about">NOAH CONOPASK</a>
 <a href="#work" data-v="work">WORK</a>
 <a href="#narrative" data-v="narrative">NARRATIVE</a>
-<a href="#photo-projects" data-v="photo-projects">PHOTO PROJECTS</a>
+<a href="#studio" data-v="studio">STUDIO</a>
 </nav>
 <div class="hr">
 <nav aria-label="Secondary"><a href="#information" data-v="information">INFORMATION</a></nav>
@@ -167,7 +167,7 @@ footer a{text-decoration:none;padding:12px 0}
 </div>
 </main>
 
-<main id="photo-projects" class="view page" style="padding-bottom:360px"><p>Coming Soon.</p></main>
+<main id="studio" class="view page" style="padding-bottom:360px"><p>Coming Soon.</p></main>
 
 <main id="information" class="view page">
 <div style="display:flex;flex-direction:column;gap:180px">
@@ -400,8 +400,8 @@ addEventListener('keydown',e=>{if(!PL.classList.contains('on'))return;
  else if(e.key==='Tab'){const f=[...PL.querySelectorAll('button:not([disabled])')].filter(b=>b.offsetParent);if(!f.length)return;const i=f.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus();}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus();}}
 });
 function stop(){closePlayer();}
-const views=['work','narrative','photo-projects','information','about'];
-function route(){stop();const v=views.includes(location.hash.slice(1))?location.hash.slice(1):'work';views.forEach(k=>document.getElementById(k).classList.toggle('on',k===v));document.querySelectorAll('nav a[data-v]').forEach(a=>a.toggleAttribute('aria-current',a.dataset.v===v)&&a.setAttribute('aria-current','page'));window.scrollTo(0,0);}
+const views=['work','narrative','studio','information','about'];
+function route(){stop();if(location.hash==='#photo-projects'){history.replaceState(null,'','#studio');}const v=views.includes(location.hash.slice(1))?location.hash.slice(1):'work';views.forEach(k=>document.getElementById(k).classList.toggle('on',k===v));document.querySelectorAll('nav a[data-v]').forEach(a=>a.toggleAttribute('aria-current',a.dataset.v===v)&&a.setAttribute('aria-current','page'));window.scrollTo(0,0);}
 addEventListener('hashchange',route);route();
 </script>
 </body>
