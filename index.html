@@ -118,6 +118,9 @@ body.screening{overflow:hidden}
 .press a{color:var(--fg)}
 footer{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 24px;margin:0 14px;padding:16px 0 40px;border-top:1px solid var(--rule);color:var(--muted)}
 footer a{text-decoration:none;padding:12px 0}
+footer .credit{display:flex;align-items:center;gap:1.2ch}
+footer .credit img{display:block;height:.85em;width:auto;opacity:.62;transition:opacity .2s}
+footer .credit:hover img{opacity:1}
 @media (prefers-reduced-motion:reduce){.reel iframe{transition:none}}
 </style>
 </head>
@@ -223,6 +226,7 @@ footer a{text-decoration:none;padding:12px 0}
 </div>
 <footer>
 <span>NOAH CONOPASK — LOS ANGELES</span>
+<a class="credit" href="https://saga.art" aria-label="Site design by Saga"><span>SITE DESIGN BY</span><img src="static/saga-logo.png" alt="SAGA" width="68" height="10"></a>
 <div style="display:flex;flex-wrap:wrap;gap:0 24px"><a href="mailto:info@noah.tv">INFO@NOAH.TV</a><a href="https://www.instagram.com/noahconopask/">INSTAGRAM</a><a href="https://www.imdb.com/name/nm3403508/">IMDB</a></div>
 </footer>
 
