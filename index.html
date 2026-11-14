@@ -21,16 +21,17 @@ nav{display:flex;flex-wrap:wrap;align-items:center;column-gap:14px}
 nav a{text-decoration:none;padding:14px 0;text-underline-offset:3px;text-decoration-thickness:1px}
 nav a[aria-current=page]{text-decoration-line:underline}
 .hr{display:flex;align-items:center;flex:none}
-.ig{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin-right:-14px}
-.hr .ig:not(.im){margin-right:0}
-.ig.im{width:36px;margin-left:-5px;margin-right:-5px}
+.ig{display:flex;align-items:center;justify-content:center;height:44px;padding:0 7px;margin:0}
+.hr nav+.ig{margin-left:7px}
+.hr .ig:last-child{margin-right:-7px}
 .ig:hover{opacity:.7}
 @media (max-width:600px){
  header{gap:8px;padding:0 12px;flex-wrap:nowrap}
  nav{flex-wrap:nowrap;column-gap:8px;white-space:nowrap}
- header nav a{font-size:min(10px,calc((100vw - 116px) / 25.8))}
- .ig{width:32px;margin-right:-8px}
- .ig.im{width:34px;margin-left:-4px;margin-right:-4px}
+ header nav a{font-size:min(10px,calc((100vw - 150px) / 25.8))}
+ .ig{padding:0 5px}
+ .hr nav+.ig{margin-left:3px}
+ .hr .ig:last-child{margin-right:-5px}
 }
 .sgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
 .sgrid img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:cover;background:var(--well)}
@@ -132,6 +133,7 @@ footer a{text-decoration:none;padding:12px 0}
 <nav aria-label="Secondary"><a href="#information" data-v="information">INFORMATION</a></nav>
 <a class="ig" href="https://www.instagram.com/noahconopask/" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" rx="3.5"/><circle cx="8" cy="8" r="3.1"/><circle cx="12" cy="4" r=".6" fill="currentColor" stroke="none"/></svg></a>
 <a class="ig im" href="https://www.imdb.com/name/nm3403508/" aria-label="IMDb"><svg width="26" height="14" viewBox="0 0 26 14" aria-hidden="true"><rect x=".65" y=".65" width="24.7" height="12.7" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><text x="13" y="10" text-anchor="middle" fill="currentColor" font-family="Roboto Mono,ui-monospace,monospace" font-size="8" font-weight="500" letter-spacing=".2">IMDb</text></svg></a>
+<a class="ig em" href="mailto:info@noah.tv" aria-label="Email info@noah.tv"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="1.15" y="3.15" width="13.7" height="9.7" rx="1"/><path d="M1.5 3.8 8 9l6.5-5.2"/></svg></a>
 </div>
 </header>
 
