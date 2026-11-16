@@ -122,6 +122,11 @@ footer .credit{display:flex;align-items:center;gap:1.2ch}
 footer .credit img{display:block;height:.85em;width:auto;opacity:.62;transition:opacity .2s}
 footer .credit:hover img{opacity:1}
 @media (prefers-reduced-motion:reduce){.reel iframe{transition:none}}
+#about .bio-layout{display:grid;grid-template-columns:minmax(180px,252px) minmax(0,560px);gap:16px clamp(32px,5vw,72px);align-items:start}
+#about .bio-portrait{display:flex;flex-direction:column;gap:16px}
+#about .bio-portrait img{width:100%;height:auto;filter:grayscale(1) contrast(1.05);background:var(--well)}
+#about .bio-copy{min-width:0;display:flex;flex-direction:column;gap:1.6em}
+@media(max-width:760px){#about .bio-layout{grid-template-columns:minmax(0,560px);gap:32px}#about .bio-portrait{max-width:280px}}
 </style>
 </head>
 <body>
@@ -200,9 +205,12 @@ footer .credit:hover img{opacity:1}
 </main>
 
 <main id="about" class="view page">
-<section class="row" style="gap:16px 112px" aria-label="Bio">
-<p style="flex:0 0 140px">BIO</p>
-<div style="flex:0 1 560px;min-width:0;display:flex;flex-direction:column;gap:1.6em">
+<section class="bio-layout" aria-label="Bio">
+<div class="bio-portrait">
+<p>BIO</p>
+<img src="img/noah-conopask-portrait.jpeg" alt="Portrait of Noah Conopask" width="724" height="1086" loading="lazy" decoding="async">
+</div>
+<div class="bio-copy">
 <p>Noah Conopask directs the moment a person changes course. An athlete gathers herself for one more run. An engine turns over in the paddock. Someone alone in the desert makes a choice they will have to live with. He builds films around moments like these, where a small human detail carries the weight of a big cinematic idea and the polish never sands away the grit.</p>
 <p>Self-taught, he came to directing through photography, design, and motion graphics. He started shooting film as a kid and still thinks about what a single frame can say before anyone moves. His images have the precision of a photograph and the momentum of something that could break loose at any second. He is as much at home in a city at full tilt as on a mountaintop at dawn, and he holds scale and intimacy in the same frame.</p>
 <p>Noah has directed work for Nike, ASICS, Under Armour, Red Bull, BMW, Bose, HOKA, Patrón, and Gillette. For Bullish, he imagined Wall Street at dawn as a cyberpunk Western, with cowboys on horseback and a guide whose calm holds the center as the city erupts around him. For ASICS’ Win the Long Run, he found the quiet rhythm of endurance and gave the audience time to feel the empowerment of going the distance.</p>
