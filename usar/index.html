@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>USAR Visual Technique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;800&family=Inter:wght@500;600;700&display=swap">
+<style>
+/* VOICE: the Same Hands treatment site, quiet and confident, big lowercase type.
+   IDEA: a director's technique sheet that moves, the PDF schematics come alive.
+   PICTURE: the clean-seams film full bleed, then four live diagrams on the 36° edge.
+   COLOUR and TYPE: ground #12140F, bone #ECE6D6, Reserve gold #FFCC01; Inter Tight 800 lowercase over Inter 600.
+   LAYOUT: 280px note column beside wide plates, run bars between sections, sticky header with section label. */
+:root{color-scheme:dark;--g:#12140F;--ink:#ECE6D6;--dim:#A9A493;--rule:#2A2D24;--acc:#FFCC01;--plate:#1B1E17}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px}
+body{margin:0;background:var(--g);color:var(--ink);font:600 16px/1.5 Inter,system-ui,sans-serif;overflow-x:clip}
+a{color:var(--acc)}a:hover{color:var(--ink)}
+.wrap{max-width:1440px;margin:0 auto;padding:0 96px}
+.run{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:24px 0;border-top:1px solid var(--rule);font-size:12px;font-weight:600;color:var(--dim)}
+.big{margin:0;font-family:'Inter Tight',sans-serif;font-weight:800;text-transform:lowercase;letter-spacing:-0.045em;line-height:0.88;font-size:clamp(48px,6.6vw,104px)}
+.big span{display:block}
+.acc{color:var(--acc)}
+.row{display:grid;grid-template-columns:280px minmax(0,1fr);gap:120px;align-items:start}
+.col{font-size:13px;line-height:1.6;font-weight:600;display:flex;flex-direction:column;gap:18px;max-width:280px}
+.col p{margin:0}
+.cap{font-size:11.5px;line-height:1.4;font-weight:600;color:var(--dim);margin:0}
+.p2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}
+section{padding-bottom:220px}
+.lab{font-size:12px;font-weight:700;color:var(--acc)}
+
+/* header */
+.hd{position:sticky;top:0;z-index:20;height:63px;border-bottom:1px solid transparent;transition:background .25s,border-color .25s}
+.hd.solid{background:var(--g);border-color:var(--rule)}
+.hd .wrap{height:100%;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:16px;font-family:'Inter Tight',sans-serif;font-weight:700;font-size:17px;letter-spacing:-0.02em;white-space:nowrap}
+.brand svg{width:30px;height:30px;flex:none}
+.sec{display:flex;align-items:baseline;gap:18px}
+.sec b{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.02em;min-width:28px;text-align:right}
+.sec span{font-size:12px;color:var(--dim);white-space:nowrap}
+
+/* cover */
+.cover{position:relative;margin-top:-63px;width:100%;aspect-ratio:16/9;min-height:560px;max-height:100vh;overflow:hidden;background:var(--plate);padding:0}
+.cover video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,20,15,.45) 0,rgba(18,20,15,0) 22%,rgba(18,20,15,0) 50%,rgba(18,20,15,.8) 100%)}
+.cover .in{position:absolute;left:0;right:0;bottom:110px;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.cover h1{font-size:clamp(88px,13vw,210px)}
+.cover .tag{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.02em;color:var(--acc);padding-bottom:12px}
+.cover .by{position:absolute;z-index:2;left:0;right:0;bottom:36px;margin:0;padding:0 24px;text-align:center;font-size:clamp(18px,2vw,28px);line-height:1.1;font-weight:700;letter-spacing:.02em;color:var(--acc)}
+.cover .note{position:absolute;z-index:2;top:84px;right:48px;max-width:260px;text-align:right;color:var(--ink)}
+
+/* film plates */
+.film{position:relative;aspect-ratio:16/9;background:var(--plate);overflow:hidden}
+.film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.film .big{position:absolute;top:16px;left:18px;font-size:clamp(36px,4vw,64px);z-index:1;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+.fig-cap{margin-top:14px}
+
+/* toggle */
+.tog{display:flex;flex-wrap:wrap;gap:8px;margin-top:56px}
+.tog button{font:700 13px/1 Inter,sans-serif;color:var(--dim);background:transparent;border:1px solid #3A3D33;padding:0 18px;min-height:44px;cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.tog button[aria-pressed=true]{color:#12140F;background:var(--acc);border-color:var(--acc)}
+.tog button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.stickytog{position:sticky;top:63px;z-index:10;background:var(--g);padding:14px 0;margin:0}
+
+/* technique blocks */
+.tech{display:flex;flex-direction:column;gap:140px;margin-top:100px}
+.tech .row{border-top:1px solid var(--acc);padding-top:20px}
+.tech h3{margin-top:16px;font-size:clamp(40px,4.6vw,72px)}
+.dia{position:relative;aspect-ratio:16/9;background:var(--plate);overflow:hidden}
+.dia svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.dia .tagl{position:absolute;left:14px;top:12px;z-index:1}
+.bars line{stroke:var(--acc);stroke-width:9;transition:opacity .25s}
+body:not(.withbars) .bars{opacity:0}
+
+/* the line */
+.mark{display:flex;align-items:flex-end;gap:20px;margin-bottom:8px}
+.swatch{background:var(--acc);color:#12140F;padding:32px 36px;min-height:420px;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.swatch .big{color:#12140F}
+.swatch .k{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;font-weight:700}
+
+.foot .run{padding:28px 0 40px}
+
+@media (max-width:900px){.wrap{padding:0 40px}.row{grid-template-columns:1fr;gap:40px}.col{max-width:none}section{padding-bottom:150px}.tech{gap:100px}}
+@media (max-width:600px){.wrap{padding:0 20px}.p2{grid-template-columns:1fr;gap:28px}.cover{aspect-ratio:auto;height:88vh;min-height:520px}.cover .note{display:none}.cover .in{bottom:96px}.sec span{display:none}.brand .nm{display:none}}
+@media (prefers-reduced-motion:reduce){.hd{transition:none}}
+</style>
+</head>
+<body class="withbars">
+
+<header class="hd" id="hd">
+<div class="wrap">
+<div class="brand">
+<svg viewBox="0 0 100 100" aria-label="Reserve star mark" role="img"><rect width="100" height="100" fill="#0E100C"/><defs><clipPath id="starclip"><polygon points="50,8 61.8,36.2 92,38.6 69,58.4 76,88 50,72 24,88 31,58.4 8,38.6 38.2,36.2"/></clipPath></defs><polygon points="50,8 61.8,36.2 92,38.6 69,58.4 76,88 50,72 24,88 31,58.4 8,38.6 38.2,36.2" fill="#FFCC01"/><g clip-path="url(#starclip)" stroke="#0E100C" stroke-width="5"><line x1="14" y1="86" x2="94" y2="28"/><line x1="24" y1="96" x2="104" y2="38"/></g></svg>
+<span><span class="nm">visual technique <span class="acc" style="margin:0 6px">//</span></span> noah conopask</span>
+</div>
+<div class="sec"><span id="secLabel">cover</span><b id="secNum">00</b></div>
+</div>
+</header>
+
+<!-- COVER -->
+<section class="cover" data-sec="cover|00">
+<video src="seams.mp4" autoplay muted loop playsinline aria-label="Clean seams film: a civilian in a suit and the same person in Reserve uniform, revealed along a 36 degree diagonal"></video>
+<p class="cap note">Reference film: clean seams, one person in matched compositions.</p>
+<div class="wrap in">
+<h1 class="big"><span>two</span><span style="padding-left:0.5em">options.</span></h1>
+<span class="tag">(36°).</span>
+</div>
+<p class="by">U.S. ARMY RESERVE / VISUAL TECHNIQUE</p>
+</section>
+
+<!-- TWO OPTIONS -->
+<section class="wrap" data-sec="(01) two options|01" style="padding-top:200px">
+<div class="run"><span>(01) two options</span><span>01</span></div>
+<h2 class="big" style="margin-top:96px"><span>one person.</span><span style="padding-left:0.6em" class="acc">two worlds.</span></h2>
+<div class="row" style="margin-top:140px">
+<div class="col">
+<p>Matched photographic compositions. The camera angle, subject position, scale and movement line up in both worlds, so the reveal lands on the same person.</p>
+<p>Both options use the same 36° geometry, and each seam separates the two worlds. The one difference is the gold bar riding the edge.</p>
+</div>
+<div class="p2">
+<figure style="margin:0">
+<div class="film"><p class="big">gold<span style="display:inline" class="acc">(1)</span></p><video src="opt-bars.mp4" autoplay muted loop playsinline aria-label="Option one: the seam carries a gold bar"></video></div>
+<p class="cap fig-cap"><span class="acc">(01) with gold bars.</span> #FFCC01 runs along every seam and ties the cut back to the Reserve star.</p>
+</figure>
+<figure style="margin:0">
+<div class="film"><p class="big">clean<span style="display:inline" class="acc">(2)</span></p><video src="opt-clean.mp4" autoplay muted loop playsinline aria-label="Option two: a clean seam with no bar"></video></div>
+<p class="cap fig-cap"><span class="acc">(02) without gold bars.</span> The worlds meet on a bare edge and the matched composition carries the transition.</p>
+</figure>
+</div>
+</div>
+</section>
+
+<!-- TECHNIQUE -->
+<section class="wrap" data-sec="(02) the technique|02">
+<div class="run"><span>(02) the technique</span><span>02</span></div>
+<h2 class="big" style="margin-top:96px"><span>four moves</span><span style="padding-left:0.6em" class="acc">on one angle.</span></h2>
+<div class="stickytog">
+<div class="tog" role="group" aria-label="Show diagrams with or without gold bars" style="margin-top:0">
+<button type="button" id="bOn" aria-pressed="true">(01) with gold bars</button>
+<button type="button" id="bOff" aria-pressed="false">(02) without gold bars</button>
+</div>
+</div>
+
+<div class="tech">
+<div class="row">
+<div class="col"><span class="lab">(1)</span><h3 class="big">the seam</h3><p>Match camera angle, subject position, scale and movement. Reveal the other world along a 36° diagonal.</p></div>
+<figure style="margin:0"><div class="dia" data-mode="seam"></div><p class="cap fig-cap">One edge travels the frame. Everything on either side of it stays locked.</p></figure>
+</div>
+<div class="row">
+<div class="col"><span class="lab">(2)</span><h3 class="big">the stagger</h3><p>Move parallel boundaries at different speeds. Alternate Reserve and civilian imagery.</p></div>
+<figure style="margin:0"><div class="dia" data-mode="stagger"></div><p class="cap fig-cap">Parallel bands cross at their own pace, so the two worlds trade places in strips.</p></figure>
+</div>
+<div class="row">
+<div class="col"><span class="lab">(3)</span><h3 class="big">depth planes</h3><p>Transition foreground, subject and background independently. Allow objects to hide the seams.</p></div>
+<figure style="margin:0"><div class="dia" data-mode="depth"></div><p class="cap fig-cap">The wall turns first, the person a beat later, and a foreground object passes over the join.</p></figure>
+</div>
+<div class="row">
+<div class="col"><span class="lab">(4)</span><h3 class="big">convergence</h3><p>Combine fragments through matched actions and shapes. Resolve into a complete image.</p></div>
+<figure style="margin:0"><div class="dia" data-mode="converge"></div><p class="cap fig-cap">Fragments of the Reserve frame close in until the image is whole, then the edge sends us back.</p></figure>
+</div>
+</div>
+</section>
+
+<!-- THE LINE -->
+<section class="wrap" data-sec="(03) the line|03">
+<div class="run"><span>(03) the line</span><span>03</span></div>
+<h2 class="big" style="margin-top:96px"><span>the edge</span><span style="padding-left:0.6em" class="acc">runs at 36°.</span></h2>
+<div class="row" style="margin-top:140px">
+<div class="col">
+<div class="mark">
+<svg viewBox="0 0 100 100" width="110" height="110" aria-hidden="true"><polygon points="50,8 61.8,36.2 92,38.6 69,58.4 76,88 50,72 24,88 31,58.4 8,38.6 38.2,36.2" fill="#FFCC01"/><g clip-path="url(#starclip)" stroke="#12140F" stroke-width="5"><line x1="14" y1="86" x2="94" y2="28"/><line x1="24" y1="96" x2="104" y2="38"/></g></svg>
+<svg aria-hidden="true" width="130" height="96" viewBox="0 0 200 140"><line x1="10" y1="120" x2="190" y2="120" stroke="#6B6A62" stroke-width="2"/><line x1="10" y1="120" x2="147.5" y2="20" stroke="#FFCC01" stroke-width="4"/><path d="M 70 120 A 60 60 0 0 0 58.5 84.7" stroke="#FFCC01" stroke-width="2" fill="none"/><text x="80" y="104" fill="#ECE6D6" font-family="Inter, sans-serif" font-size="22" font-weight="700">36°</text></svg>
+</div>
+<p>Both options share one geometry. Every seam rises at 36°, the angle of the stripes in the Reserve star.</p>
+<p>Each seam separates two worlds, and the person stays whole across it.</p>
+</div>
+<div class="swatch">
+<div class="k"><span>(gold bars).</span><span>option 01</span></div>
+<p class="big" style="font-size:clamp(56px,8vw,140px)"><span>#ffcc01.</span></p>
+<div class="k"><span>Same angle, same spacing, in every frame</span><span>36°</span></div>
+</div>
+</div>
+</section>
+
+<div class="wrap foot">
+<p class="cap" style="padding-bottom:24px">Schematic diagrams, not final style frames.</p>
+<div class="run"><span>visual technique <span class="acc">//</span> noah conopask</span><a href="https://noah.tv" style="text-decoration:none">noah.tv</a></div>
+</div>
+
+<script>
+{
+const SVGNS='http://www.w3.org/2000/svg';
+const W=1600,H=900,A=36*Math.PI/180;
+const U=[Math.cos(A),-Math.sin(A)],N=[Math.sin(A),Math.cos(A)];
+const MAXD=W*N[0]+H*N[1];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const pal={
+ civ:{wall:'#74879A',win:'#93A6B3',winf:'#B7C5CE',mull:'#5F7383',floor:'#3E4955',box1:'#566270',box2:'#2E3843',skin:'#B49A80',hair:'#2B2725',torso:'#2C3648',collar:'#D7DDE2',tie:'#16202C'},
+ res:{wall:'#4E5745',win:'#66715A',winf:'#323A2C',mull:'#323A2C',floor:'#2F3627',box1:'#2E3528',box2:'#454932',skin:'#B49A80',hair:'#55613F',torso:'#76805E',collar:'#3F4A33',tie:'#434C36'}
+};
+
+function bg(p){
+ let s=`<rect width="${W}" height="${H}" fill="${p.wall}"/>`;
+ for(let i=0;i<4;i++){const x=70+i*400;s+=`<rect x="${x}" y="90" width="330" height="460" fill="${p.winf}"/><rect x="${x+22}" y="112" width="286" height="416" fill="${p.win}"/><rect x="${x+158}" y="112" width="10" height="416" fill="${p.mull}"/>`;}
+ s+=`<rect y="640" width="${W}" height="260" fill="${p.floor}"/>`;
+ return s;
+}
+function subject(p,isRes){
+ let s=`<polygon points="520,900 545,560 720,470 880,470 1055,560 1080,900" fill="${p.torso}"/>`;
+ if(isRes){
+  s+=`<polygon points="720,470 800,610 880,470" fill="${p.collar}"/><rect x="600" y="640" width="110" height="70" fill="${p.collar}"/><rect x="890" y="640" width="110" height="70" fill="${p.collar}"/>`;
+  s+=`<ellipse cx="800" cy="350" rx="112" ry="135" fill="${p.skin}"/><polygon points="660,300 690,200 800,170 910,200 945,300" fill="${p.hair}"/>`;
+ }else{
+  s+=`<polygon points="740,470 800,560 860,470" fill="${p.collar}"/><polygon points="785,520 815,520 828,720 800,760 772,720" fill="${p.tie}"/>`;
+  s+=`<ellipse cx="800" cy="350" rx="112" ry="135" fill="${p.skin}"/><polygon points="688,320 682,240 730,190 860,185 912,240 912,320 880,250 720,250" fill="${p.hair}"/>`;
+ }
+ return s;
+}
+function fg(p){return `<polygon points="0,900 0,700 250,640 420,700 420,900" fill="${p.box1}"/><polygon points="1230,900 1230,710 1600,630 1600,900" fill="${p.box2}"/>`;}
+
+function bandPts(d1,d2){
+ const L=4000,p=(d,s)=>[N[0]*d+U[0]*L*s,N[1]*d+U[1]*L*s];
+ return [p(d1,-1),p(d1,1),p(d2,1),p(d2,-1)].map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ');
+}
+function lineAt(d){const L=4000;return [N[0]*d-U[0]*L,N[1]*d-U[1]*L,N[0]*d+U[0]*L,N[1]*d+U[1]*L].map(v=>v.toFixed(1));}
+
+const ease=x=>x<0?0:x>1?1:x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const pp=t=>{t=((t%1)+1)%1;return ease(t<.5?t*2:2-t*2);} // ping-pong 0..1..0
+const lerp=(a,b,k)=>a+(b-a)*k;
+
+const modes={
+ seam(t){const x=lerp(-60,MAXD+60,pp(t));const b=[[-5000,x]];return {bg:b,sub:b,fg:b,bars:[x]};},
+ stagger(t){
+  const spans=[[.0,1,150],[.35,1.6,95],[.7,.75,120]];
+  const b=[],bars=[];
+  spans.forEach(([o,sp,w])=>{const c=lerp(-w-40,MAXD+w+40,((t*sp+o)%1));b.push([c-w,c+w]);bars.push(c-w,c+w);});
+  return {bg:b,sub:b,fg:b,bars};
+ },
+ depth(t){
+  const xb=lerp(-60,MAXD+60,pp(t)),xs=lerp(-60,MAXD+60,pp(t-.07)),xf=lerp(-60,MAXD+60,pp(t-.14));
+  const ox=lerp(2000,-900,(t*2)%1);
+  return {bg:[[-5000,xb]],sub:[[-5000,xs]],fg:[[-5000,xf]],bars:[xb],occ:ox};
+ },
+ converge(t){
+  const n=5,step=MAXD/(n-1);
+  const off=[-260,180,-120,300,-200];
+  if(t<.62){const k=ease(t/.62),w=lerp(14,step*.56,k);const b=[],bars=[];
+   for(let i=0;i<n;i++){const c=i*step+off[i]*(1-k);b.push([c-w,c+w]);if(w<step*.5)bars.push(c-w,c+w);}
+   return {bg:b,sub:b,fg:b,bars};}
+  if(t<.82){const b=[[-5000,5000]];return {bg:b,sub:b,fg:b,bars:[]};}
+  const x=lerp(-60,MAXD+60,ease((t-.82)/.18));const b=[[x,5000]];return {bg:b,sub:b,fg:b,bars:[x]};
+ }
+};
+
+let uid=0;
+function build(el){
+ const id='d'+(uid++),mode=el.dataset.mode;
+ const svg=document.createElementNS(SVGNS,'svg');
+ svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('preserveAspectRatio','xMidYMid slice');
+ svg.setAttribute('role','img');svg.setAttribute('aria-label',el.parentElement.querySelector('.cap').textContent);
+ const occ=mode==='depth'?`<g id="${id}o"><polygon points="0,900 140,560 520,500 760,900" fill="#1A1E16"/><polygon points="140,560 520,500 560,560 190,610" fill="#262B20"/></g>`:'';
+ svg.innerHTML=`<defs><clipPath id="${id}b"><polygon/></clipPath><clipPath id="${id}s"><polygon/></clipPath><clipPath id="${id}f"><polygon/></clipPath></defs>
+ <g>${bg(pal.civ)}</g><g clip-path="url(#${id}b)">${bg(pal.res)}</g>
+ <g class="bars" id="${id}l"></g>
+ <g>${subject(pal.civ,false)}</g><g clip-path="url(#${id}s)">${subject(pal.res,true)}</g>
+ <g>${fg(pal.civ)}</g><g clip-path="url(#${id}f)">${fg(pal.res)}</g>${occ}`;
+ el.appendChild(svg);
+ const cps={bg:svg.querySelector(`#${id}b`),sub:svg.querySelector(`#${id}s`),fg:svg.querySelector(`#${id}f`)};
+ const barsG=svg.querySelector(`#${id}l`),occG=svg.querySelector(`#${id}o`);
+ if(mode!=='depth'){barsG.remove();svg.appendChild(barsG);} // bars on top except where objects should hide them
+ const setClip=(cp,bands)=>{while(cp.childNodes.length<bands.length)cp.appendChild(document.createElementNS(SVGNS,'polygon'));
+  [...cp.childNodes].forEach((pg,i)=>{if(i<bands.length)pg.setAttribute('points',bandPts(bands[i][0],bands[i][1]));else pg.setAttribute('points','');});};
+ const render=t=>{const s=modes[mode](t);setClip(cps.bg,s.bg);setClip(cps.sub,s.sub);setClip(cps.fg,s.fg);
+  barsG.innerHTML=s.bars.map(d=>{const [x1,y1,x2,y2]=lineAt(d);return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;}).join('');
+  if(occG)occG.setAttribute('transform',`translate(${s.occ.toFixed(1)} 0)`);};
+ return {el,render,period:mode==='converge'?9000:7000,on:false};
+}
+
+const dias=[...document.querySelectorAll('.dia')].map(build);
+dias.forEach(d=>d.render(.3));
+if(!reduce){
+ const io=new IntersectionObserver(es=>es.forEach(e=>{const d=dias.find(x=>x.el===e.target);if(d)d.on=e.isIntersecting;}),{rootMargin:'100px'});
+ dias.forEach(d=>io.observe(d.el));
+ const t0=performance.now();
+ const tick=now=>{dias.forEach(d=>{if(d.on)d.render(((now-t0)%d.period)/d.period);});requestAnimationFrame(tick);};
+ requestAnimationFrame(tick);
+}else{
+ document.querySelectorAll('video').forEach(v=>{v.removeAttribute('autoplay');v.pause();v.controls=true;});
+}
+
+const bOn=document.getElementById('bOn'),bOff=document.getElementById('bOff');
+const setBars=on=>{document.body.classList.toggle('withbars',on);bOn.setAttribute('aria-pressed',on);bOff.setAttribute('aria-pressed',!on);};
+bOn.addEventListener('click',()=>setBars(true));bOff.addEventListener('click',()=>setBars(false));
+
+const hd=document.getElementById('hd'),lab=document.getElementById('secLabel'),num=document.getElementById('secNum');
+const secs=[...document.querySelectorAll('[data-sec]')],cover=document.querySelector('.cover');
+const onScroll=()=>{let cur=secs[0];secs.forEach(s=>{if(s.getBoundingClientRect().top<160)cur=s;});
+ const [l,n]=cur.dataset.sec.split('|');if(lab.textContent!==l){lab.textContent=l;num.textContent=n;}
+ hd.classList.toggle('solid',cover.getBoundingClientRect().bottom<=90);};
+addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
+}
+</script>
+</body>
+</html>
