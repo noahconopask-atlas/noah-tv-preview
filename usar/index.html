@@ -46,10 +46,11 @@ section{padding-bottom:220px}
 .cover{position:relative;margin-top:-63px;width:100%;aspect-ratio:16/9;min-height:560px;max-height:100vh;overflow:hidden;background:var(--plate);padding:0}
 .cover video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,20,15,.45) 0,rgba(18,20,15,0) 22%,rgba(18,20,15,0) 50%,rgba(18,20,15,.8) 100%)}
-.cover .in{position:absolute;left:0;right:0;bottom:110px;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-.cover h1{font-size:clamp(60px,12vw,196px)}
-.cover .tag{font-family:var(--f);font-weight:700;font-size:22px;color:var(--acc);padding-bottom:12px}
-.cover .by{font-family:var(--f);position:absolute;z-index:2;left:0;right:0;bottom:36px;margin:0;padding:0 24px;text-align:center;font-size:clamp(18px,2vw,28px);line-height:1.1;font-weight:700;letter-spacing:.02em;color:var(--acc)}
+.cover .stack{position:absolute;z-index:2;left:0;right:0;bottom:16%;display:flex;flex-direction:column;align-items:center;gap:clamp(28px,4.5vw,64px);padding:0 24px;text-align:center}
+.cover .line{color:var(--acc);font-size:clamp(26px,4.4vw,80px);line-height:.95;text-shadow:0 2px 30px rgba(10,12,8,.35)}
+.cover .line .sl{display:inline;white-space:nowrap}
+.cover .ec{font-size:clamp(24px,2.7vw,46px);text-align:left;color:var(--ink)}
+.cover .tag{position:absolute;z-index:2;right:96px;bottom:9%;font-family:var(--f);font-weight:700;font-size:22px;color:var(--acc)}
 .cover .note{position:absolute;z-index:2;top:84px;right:48px;max-width:260px;text-align:right;color:var(--ink)}
 
 /* film plates */
@@ -83,8 +84,8 @@ body:not(.withbars) .bars{opacity:0}
 
 .foot .run{padding:28px 0 40px}
 
-@media (max-width:900px){.wrap{padding:0 40px}.row{grid-template-columns:1fr;gap:40px}.col{max-width:none}section{padding-bottom:150px}.tech{gap:100px}}
-@media (max-width:600px){.wrap{padding:0 20px}.p2{grid-template-columns:1fr;gap:28px}.cover{aspect-ratio:auto;height:88vh;min-height:520px}.cover .note{display:none}.cover .in{bottom:96px}.sec span{display:none}.brand .nm{display:none}}
+@media (max-width:900px){.wrap{padding:0 40px}.cover .tag{right:40px}.row{grid-template-columns:1fr;gap:40px}.col{max-width:none}section{padding-bottom:150px}.tech{gap:100px}}
+@media (max-width:600px){.wrap{padding:0 20px}.p2{grid-template-columns:1fr;gap:28px}.cover{aspect-ratio:auto;height:88vh;min-height:520px}.cover .note{display:none}.cover .stack{bottom:14%}.cover .tag{right:20px;bottom:5%}.sec span{display:none}.brand .nm{display:none}}
 @media (prefers-reduced-motion:reduce){.hd{transition:none}}
 </style>
 </head>
@@ -104,11 +105,11 @@ body:not(.withbars) .bars{opacity:0}
 <section class="cover" data-sec="cover|00">
 <video src="seams.mp4" autoplay muted loop playsinline aria-label="Clean seams film: a civilian in a suit and the same person in Reserve uniform, revealed along a 36 degree diagonal"></video>
 <p class="cap note">Reference film: clean seams, one person in matched compositions.</p>
-<div class="wrap in">
-<h1 class="big"><span>the edge</span><span>cut.</span></h1>
-<span class="tag">(36°).</span>
+<div class="stack">
+<p class="big line">U.S. Army Reserve <span class="sl">/ two options</span></p>
+<h1 class="big ec"><span>the edge</span><span>cut.</span></h1>
 </div>
-<p class="by">U.S. ARMY RESERVE / TWO OPTIONS</p>
+<span class="tag">(36°).</span>
 </section>
 
 <!-- TWO OPTIONS -->
