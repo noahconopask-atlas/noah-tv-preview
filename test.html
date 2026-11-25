@@ -480,7 +480,7 @@ addEventListener('message',e=>{if(!frame||e.source!==frame.contentWindow)return;
  heard=true;clearT();
  if(src==='vimeo'){
   if(d.event==='ready'){['ended','pause','play','timeupdate'].forEach(v=>send({method:'addEventListener',value:v}));send({method:'disableTextTrack'});send({method:'getDuration'});}
-  else if(d.event==='timeupdate'&&d.data){setTime(+d.data.seconds,+d.data.duration);}
+  else if((d.event==='timeupdate'||d.event==='playProgress')&&d.data){setTime(+d.data.seconds,+d.data.duration);}
   else if(d.method==='getDuration'&&+d.value>0){setTime(-1,+d.value);}
   else if(d.event==='play'&&!PL._tt){PL._tt=1;send({method:'disableTextTrack'});setPaused(false);}
   else if(d.event==='ended'||d.event==='finish'){closePlayer();}
