@@ -86,9 +86,9 @@ nav a[aria-current=page]{text-decoration-line:underline}
 .tile .thumb{display:block;width:100%;height:100%;padding:0}
 .tile .thumb img{width:100%;height:100%;object-fit:cover;transition:opacity .25s}
 .tile .thumb:hover img{opacity:.78}
-.tile .ph .sc{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;pointer-events:none}
+.tile .ph .sc,.tile .ph .sv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;pointer-events:none;background:#000}
 .tile .ph .scb{position:absolute;left:0;bottom:0;height:2px;width:0;background:rgba(255,255,255,.85);opacity:0;pointer-events:none}
-.tile.scrubbing .ph .sc,.tile.scrubbing .ph .scb{opacity:1}
+.tile.scrubbing .ph .sc,.tile.scrubbing .ph .scb,.tile.scrubbing.vready .ph .sv{opacity:1}
 .tile.scrubbing .thumb img{opacity:1}
 #films .thumb img{filter:brightness(1.05)}
 .tile .meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;padding-top:10px}
@@ -304,18 +304,24 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 document.getElementById('fcount').textContent=F.length+' FILMS';
 document.getElementById('films').innerHTML=F.map((f,i)=>{const lab=f[1]+' — '+f[2];return `<div class="tile" data-src="${f[4]||'vimeo'}" data-id="${f[3]}" data-label="${esc(lab)}"><div class="ph"><button type="button" class="thumb" aria-label="Play ${esc(lab)}"><img loading="lazy" src="${IMG[f[0]]}" alt=""></button></div><div class="meta"><span class="n">${String(i+1).padStart(2,'0')}</span><span>${esc(f[1])}</span><span class="muted">${esc(f[2])}</span><span class="ctl"><button type="button" class="go">PLAY</button></span></div></div>`}).join('');
 
-(function(){const SCRUB={"01-patron":10,"02-bullish":10,"03-bmw-redefined":10,"04-hoka":9,"05-nemiroff":10,"06-bmw-rereveal":10,"07-asics":10,"07b-absorber":10,"08-redbull":10,"09-ua-thegift":9,"10-bodyarmor":9,"11-bose-inspired":9,"12-adrenaline":10,"13-tampa":10,"14-coros":10,"15-ladbrokes":10,"16-solomongrey":10,"17-eastbay":10,"17b-eastbay-distractions":10,"18-skoda":9,"19-dazn":9,"20-academy":10,"22-gm":10,"23-pwc":10,"24-nike":10,"25-ua-coldgear":10,"25b-gillette":10,"26-eastbay-itbeginsnow":10};
+(function(){const SCRUB={"01-patron":10,"02-bullish":10,"03-bmw-redefined":10,"04-hoka":9,"05-nemiroff":10,"06-bmw-rereveal":10,"07-asics":10,"07b-absorber":10,"08-redbull":10,"09-ua-thegift":9,"10-bodyarmor":9,"11-bose-inspired":9,"12-adrenaline":10,"13-tampa":10,"14-coros":10,"15-ladbrokes":10,"16-solomongrey":10,"17-eastbay":10,"17b-eastbay-distractions":10,"18-skoda":9,"19-dazn":9,"20-academy":10,"22-gm":10,"23-pwc":10,"24-nike":10,"25-ua-coldgear":10,"25b-gillette":10,"26-eastbay-itbeginsnow":10},VID=new Set(["01-patron","02-bullish","03-bmw-redefined","04-hoka","05-nemiroff","06-bmw-rereveal","07-asics","08-redbull","09-ua-thegift","10-bodyarmor","11-bose-inspired","12-adrenaline","13-tampa","14-coros","15-ladbrokes","16-solomongrey","17-eastbay","17b-eastbay-distractions","18-skoda","19-dazn","20-academy","22-gm","23-pwc","24-nike","25-ua-coldgear","25b-gillette","26-eastbay-itbeginsnow"]);
 if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;
 document.querySelectorAll('#films .tile').forEach((t,i)=>{const k=F[i][0],n=SCRUB[k];if(!n)return;
-const ph=t.querySelector('.ph');let fr=null,cur=-1;
+const ph=t.querySelector('.ph');let fr=null,cur=-1,v=null,busy=false,want=-1;
 const sc=document.createElement('img');sc.className='sc';sc.alt='';sc.decoding='async';
-const bar=document.createElement('i');bar.className='scb';ph.append(sc,bar);
-const load=()=>{if(fr)return;fr=[];for(let j=1;j<=n;j++){const im=new Image();im.decoding='async';im.src='scrub/'+k+'/'+String(j).padStart(2,'0')+'.jpg';fr.push(im);}};
+const bar=document.createElement('i');bar.className='scb';ph.append(sc);
+if(VID.has(k)){v=document.createElement('video');v.className='sv';v.muted=true;v.playsInline=true;v.preload='none';v.setAttribute('disablepictureinpicture','');v.setAttribute('aria-hidden','true');ph.append(v);
+v.addEventListener('loadedmetadata',()=>go());
+v.addEventListener('seeked',()=>{busy=false;t.classList.add('vready');go();});
+v.addEventListener('error',()=>{v=null;t.classList.remove('vready');});}
+ph.append(bar);
+function go(){if(!v||busy||want<0||v.readyState<1||!isFinite(v.duration))return;const tt=want*v.duration;if(Math.abs(tt-v.currentTime)<1/48&&t.classList.contains('vready'))return;busy=true;v.currentTime=tt;}
+const load=()=>{if(fr)return;fr=[];for(let j=1;j<=n;j++){const im=new Image();im.decoding='async';im.src='scrub/'+k+'/'+String(j).padStart(2,'0')+'.jpg';fr.push(im);}if(v){v.src='scrub/v/'+k+'.mp4';v.preload='auto';v.load();}};
 ph.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')load();});
 ph.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;load();
-const r=ph.getBoundingClientRect(),x=Math.min(.9999,Math.max(0,(e.clientX-r.left)/r.width)),j=Math.floor(x*n);
-if(j===cur)return;const im=fr[j];if(!(im.complete&&im.naturalWidth))return;
-sc.src=im.src;cur=j;bar.style.width=((j+1)/n*100)+'%';t.classList.add('scrubbing');});
+const r=ph.getBoundingClientRect(),x=Math.min(.9999,Math.max(0,(e.clientX-r.left)/r.width));
+want=x;bar.style.width=(x*100)+'%';t.classList.add('scrubbing');go();
+const j=Math.floor(x*n);if(j===cur)return;const im=fr[j];if(!(im.complete&&im.naturalWidth))return;sc.src=im.src;cur=j;});
 ph.addEventListener('pointerleave',()=>{t.classList.remove('scrubbing');cur=-1;});
 });})();
 const RB=document.getElementById('reelbg');
