@@ -165,7 +165,7 @@ footer .credit:hover img{opacity:1}
 <div class="hero">
 <section class="reel" aria-label="Reel" id="reel">
 <img class="poster" src="img/00-reel.jpg" alt="">
-<iframe id="reelbg" src="https://player.vimeo.com/video/529062239?background=1&autoplay=1&loop=1&muted=1&controls=0&autopause=0&dnt=1&texttrack=false&title=0&byline=0&portrait=0" title="Noah Conopask reel, playing silently" tabindex="-1" aria-hidden="true" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+<iframe id="reelbg" src="https://player.vimeo.com/video/529062239?background=1&autoplay=1&loop=1&muted=1&playsinline=1&controls=0&autopause=0&dnt=1&texttrack=false&title=0&byline=0&portrait=0" title="Noah Conopask reel, playing silently" tabindex="-1" aria-hidden="true" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
 <button type="button" class="cue l" aria-label="Scroll to selected work"><svg class="ar" width="12" height="20" viewBox="0 0 12 20" aria-hidden="true"><path d="M6 1v17M1 13l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.25"/></svg></button><button type="button" class="cue r" aria-label="Scroll to selected work" tabindex="-1"><svg class="ar" width="12" height="20" viewBox="0 0 12 20" aria-hidden="true"><path d="M6 1v17M1 13l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.25"/></svg></button>
 </section>
 <div class="shade" aria-hidden="true"></div>
@@ -298,7 +298,19 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 (()=>{const cs=[...document.querySelectorAll('.reel .cue')];if(!cs.length)return;const go=()=>{const t=document.getElementById('selected');const y=t.getBoundingClientRect().top+scrollY-74+30-12;scrollTo({top:y,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})};cs.forEach(c=>c.addEventListener('click',go));const f=()=>cs.forEach(c=>c.classList.toggle('gone',scrollY>40));addEventListener('scroll',f,{passive:true});f();})();
 document.getElementById('fcount').textContent=F.length+' FILMS';
 document.getElementById('films').innerHTML=F.map((f,i)=>{const lab=f[1]+' — '+f[2];return `<div class="tile" data-src="${f[4]||'vimeo'}" data-id="${f[3]}" data-label="${esc(lab)}"><div class="ph"><button type="button" class="thumb" aria-label="Play ${esc(lab)}"><img loading="lazy" src="${IMG[f[0]]}" alt=""></button></div><div class="meta"><span class="n">${String(i+1).padStart(2,'0')}</span><span>${esc(f[1])}</span><span class="muted">${esc(f[2])}</span><span class="ctl"><button type="button" class="go">PLAY</button></span></div></div>`}).join('');
-const RB=document.getElementById('reelbg');RB.addEventListener('load',()=>setTimeout(()=>document.getElementById('reel').classList.add('live'),700));
+const RB=document.getElementById('reelbg');
+(()=>{const R=document.getElementById('reel');let ready=false,live=false;
+ const show=()=>{if(!live){live=true;R.classList.add('live')}};
+ const send=(m,v)=>{try{RB.contentWindow.postMessage(JSON.stringify(v===undefined?{method:m}:{method:m,value:v}),'https://player.vimeo.com')}catch(e){}};
+ const listen=()=>{send('addEventListener','play');send('addEventListener','timeupdate');send('play')};
+ addEventListener('message',e=>{if(e.origin!=='https://player.vimeo.com'||e.source!==RB.contentWindow)return;let d=e.data;if(typeof d==='string'){try{d=JSON.parse(d)}catch(x){return}}if(!d)return;
+  if(d.event==='ready'){ready=true;listen()}
+  if(d.event==='play'||d.event==='timeupdate'){show()}});
+ RB.addEventListener('load',()=>{listen();setTimeout(()=>{if(!ready)show()},5000)});
+ const kick=()=>{if(!live)send('play')};
+ ['touchstart','pointerdown','scroll'].forEach(t=>addEventListener(t,kick,{passive:true}));
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!live)send('play')});
+})();
 const P=[
 ['11/14/26','Absorber wins at Indie Short Fest, October 2026: Best Horror Short, Best Cinematography, and an Outstanding Achievement Award for Editing, plus Best Short of the Season Runner-up (Special Jury Mention).','See the winners.','https://indieshortfest.com/award-winners-october-2026/'],
 ['11/12/26','Absorber, four award nominations at Indie Short Fest, October 2026: Best Horror Short, Best Cinematography, Best Editing, and Best Original Score.','See the nominations.','https://indieshortfest.com/2026/11/12/october-2026-award-nominations/'],
