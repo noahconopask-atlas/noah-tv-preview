@@ -45,6 +45,17 @@ nav a[aria-current=page]{text-decoration-line:underline}
  #work .sel{padding-top:30px!important}
 }
 #work .bar{border-top:0;padding-top:0}
+.hero{position:relative}
+.hero .shade{display:none}
+.intro{padding:28px 14px 0;font-size:15px;line-height:1.45;max-width:46ch;display:flex;flex-direction:column;gap:1em}
+.intro p{margin:0}
+.intro a{color:var(--fg);text-decoration:none;border-bottom:1px solid rgba(236,235,230,.45);transition:color .2s,border-color .2s}
+.intro a:hover,.intro a:focus-visible{border-color:var(--fg);outline:none}
+@media (hover:hover){.intro a:hover{opacity:.7}}
+@media (min-width:761px){
+ .hero .shade{display:block;position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top right,rgba(0,0,0,.72),rgba(0,0,0,.32) 45%,rgba(0,0,0,0) 72%)}
+ .intro{position:absolute;left:14px;bottom:64px;padding:0;font-size:clamp(15px,1.45vw,24px);line-height:1.4;max-width:44ch;text-shadow:0 0 14px rgba(0,0,0,.55)}
+}
 .reel .cue{position:absolute;bottom:12px;padding:10px 8px;margin:0 -8px;color:#ecebe6;text-shadow:0 0 10px rgba(0,0,0,.7);opacity:.85;transition:opacity .6s ease;display:flex;gap:1ch;align-items:baseline}
 .reel .cue.l{left:14px}.reel .cue.r{right:14px}
 .reel .cue:hover{opacity:1}
@@ -146,11 +157,18 @@ footer .credit:hover img{opacity:1}
 </header>
 
 <main id="work" class="view">
+<div class="hero">
 <section class="reel" aria-label="Reel" id="reel">
 <img class="poster" src="img/00-reel.jpg" alt="">
 <iframe id="reelbg" src="https://player.vimeo.com/video/529062239?background=1&autoplay=1&loop=1&muted=1&controls=0&autopause=0&dnt=1&texttrack=false&title=0&byline=0&portrait=0" title="Noah Conopask reel, playing silently" tabindex="-1" aria-hidden="true" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
 <button type="button" class="cue l" aria-label="Scroll to selected work"><svg class="ar" width="12" height="20" viewBox="0 0 12 20" aria-hidden="true"><path d="M6 1v17M1 13l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.25"/></svg></button><button type="button" class="cue r" aria-label="Scroll to selected work" tabindex="-1"><svg class="ar" width="12" height="20" viewBox="0 0 12 20" aria-hidden="true"><path d="M6 1v17M1 13l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.25"/></svg></button>
 </section>
+<div class="shade" aria-hidden="true"></div>
+<div class="intro">
+<p>I&#8217;m Noah Conopask, an award-winning director living in Los Angeles. I started in design and got an Emmy nomination for title work. I&#8217;ve shot photos since I was a kid, and I&#8217;ve been directing for twenty years.</p>
+<p>See the work for <a href="#selected" data-film="1150437364">BMW</a>, <a href="#selected" data-film="1198558139">Patrón</a>, <a href="#selected" data-film="1143969251">Bullish</a>, <a href="#selected" data-film="279367081">Red Bull</a>, <a href="#selected" data-film="249727579">Bose</a> and <a href="#selected" data-film="1146211998">HOKA</a>, and my short film <a href="#selected" data-film="nTAoONM-MbI">Absorber</a>.</p>
+</div>
+</div>
 <section class="sel" id="selected" aria-label="Selected work" style="padding:72px 0 120px">
 <div class="bar"><span>SELECTED WORK</span><span class="muted" id="fcount">25 FILMS</span></div>
 <div class="grid" id="films"></div>
@@ -407,6 +425,7 @@ addEventListener('message',e=>{if(!frame||e.source!==frame.contentWindow)return;
 document.addEventListener('click',e=>{
  const t=e.target.closest('.tile[data-id]');
  if(t&&e.target.closest('.thumb,.go')){openPlayer(t);return;}
+ const fl=e.target.closest('a[data-film]');if(fl){const ft=document.querySelector(`#films .tile[data-id="${fl.dataset.film}"]`);if(ft){e.preventDefault();openPlayer(ft);return;}}
  if(e.target.closest('.pclose'))closePlayer();
  else if(e.target.closest('#pprev,#pprev2'))step(-1);
  else if(e.target.closest('#pnext,#pnext2'))step(1);
